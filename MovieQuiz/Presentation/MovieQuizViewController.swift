@@ -25,6 +25,7 @@ final class MovieQuizViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        presenter.viewController = self
         imageView.layer.cornerRadius = 20
         questionFactory = QuestionFactoryImpl(moviesLoader: MoviesLoader(), delegate: self)
         statisticService = StatisticServiceImplementation()
@@ -37,22 +38,12 @@ final class MovieQuizViewController: UIViewController {
     
     // MARK: - Actions
     
-    @IBAction private func yesButtonClicked(_ sender: Any) {
-        guard let currentQuestion = currentQuestion else { return }
-        if currentQuestion.correctAnswer == true {
-            showAnswerResult(isCorrect: true)
-        } else {
-            showAnswerResult(isCorrect: false)
-        }
+    @IBAction private func yesButtonClicked(_ sender: UIButton) {
+        presenter.yesButtonClicked()
     }
     
-    @IBAction private func noButtonClicked(_ sender: Any) {
-        guard let currentQuestion = currentQuestion else { return }
-        if currentQuestion.correctAnswer == false {
-            showAnswerResult(isCorrect: true)
-        } else {
-            showAnswerResult(isCorrect: false)
-        }
+    @IBAction private func noButtonClicked(_ sender: UIButton) {
+        presenter.noButtonClicked()
     }
     
     // MARK: - Private Functions
@@ -84,7 +75,7 @@ final class MovieQuizViewController: UIViewController {
         alertPresenter?.show(with: model)
     }
     
-    private func showAnswerResult(isCorrect: Bool) {
+    func showAnswerResult(isCorrect: Bool) {
         yesButton.isEnabled = false
         noButton.isEnabled = false
         imageView.layer.masksToBounds = true
@@ -104,7 +95,7 @@ final class MovieQuizViewController: UIViewController {
         }
     }
     
-    private func show(quiz step: QuizStepViewModel) {
+    func show(quiz step: QuizStepViewModel) {
         imageView.image = step.image
         textLabel.text = step.question
         counterLabel.text = step.questionNumber
@@ -156,9 +147,7 @@ final class MovieQuizViewController: UIViewController {
 extension MovieQuizViewController: QuestionFactoryDelegate {
     
     func didReceiveNextQuestion(_ question: QuizQuestion) {
-        self.currentQuestion = question
-        let viewModel = presenter.convert(model: question)
-        self.show(quiz: viewModel)
+        presenter.didRecieveNextQuestion(question: question)
     }
     
     func didLoadDataFromServer() {
