@@ -13,7 +13,11 @@ protocol MoviesLoading {
 
 struct MoviesLoader: MoviesLoading {
     
+    // MARK: - NetworkClinet
+    
     private let networkClient = NetworkClient()
+    
+    // MARK: - URL
     
     private var mostPopularMoviesUrl: URL {
         guard let url = URL(string: "https://imdb-api.com/en/API/Top250Movies/k_zcuw1ytf") else {
