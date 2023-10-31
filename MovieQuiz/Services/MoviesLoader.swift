@@ -2,7 +2,6 @@
 //  MoviesLoader.swift
 //  MovieQuiz
 //
-//  Created by Bakhadir on 15.10.2023.
 //
 
 import Foundation
@@ -13,11 +12,9 @@ protocol MoviesLoading {
 
 struct MoviesLoader: MoviesLoading {
     
-    // MARK: - NetworkClinet
+    //MARK: - Private Properties
     
     private let networkClient = NetworkClient()
-    
-    // MARK: - URL
     
     private var mostPopularMoviesUrl: URL {
         guard let url = URL(string: "https://imdb-api.com/en/API/Top250Movies/k_zcuw1ytf") else {
@@ -25,6 +22,8 @@ struct MoviesLoader: MoviesLoading {
         }
         return url
     }
+    
+    //MARK: - Public Methods
     
     func loadMovies(handler: @escaping (Result<MostPopularMovies, Error>) -> Void) {
         networkClient.fetch(url: mostPopularMoviesUrl) { result in
