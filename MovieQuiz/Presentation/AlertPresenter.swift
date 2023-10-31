@@ -7,41 +7,19 @@
 import Foundation
 import UIKit
 
-protocol AlertPresenter: AnyObject {
-    
-    func show(with alertModel: AlertModel)
-}
-
-final class AlertPresenterImpl {
-    
-    // MARK: - Private Properties
-    
-    private let viewController: UIViewController
-    
-    // MARK: - Initializers
-    
-    init(viewController: UIViewController) {
-        self.viewController = viewController
-    }
-}
-
-//MARK: - Alert Presenter
-
-extension AlertPresenterImpl: AlertPresenter {
-    
-    func show(with alertModel: AlertModel) {
+class AlertPresenter {
+    func show(in vc: UIViewController, model: AlertModel) {
         let alert = UIAlertController(
-            title: alertModel.title,
-            message: alertModel.message,
+            title: model.title,
+            message: model.message,
             preferredStyle: .alert)
         
-        let action = UIAlertAction(title: alertModel.buttonText, style: .default) { _ in
-            alertModel.buttonAction()
+        let action = UIAlertAction(title: model.buttonText, style: .default) { _ in
+            model.completion()
         }
-            
+        
         alert.addAction(action)
         
-        viewController.present(alert, animated: true)
+        vc.present(alert, animated: true, completion: nil)
     }
 }
-

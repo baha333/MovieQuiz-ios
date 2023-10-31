@@ -1,26 +1,26 @@
 //
-//  StatisticService.swift
+//  StaticService.swift
 //  MovieQuiz
 //
-//  Created by Bakhadir on 28.09.2023.
+//  Created by Bakhadir on 31.10.2023.
 //
 
 import Foundation
 
 protocol StatisticService {
     func store(correct count: Int, total amount: Int)
+    
     var totalAccuracy: Double { get }
     var gamesCount: Int { get }
     var bestGame: GameRecord { get }
 }
-
 
 final class StatisticServiceImplementation: StatisticService {
     private enum Keys: String {
         case correct, total, bestGame, gamesCount
     }
     private let userDefaults = UserDefaults.standard
-
+   
     // MARK: - Public methods
     func store(correct count: Int, total amount: Int) {
         self.correct += count
@@ -92,3 +92,4 @@ final class StatisticServiceImplementation: StatisticService {
         }
     }
 }
+
