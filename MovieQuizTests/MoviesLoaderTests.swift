@@ -18,7 +18,7 @@ class MovieLoaderTests: XCTestCase {
         
         let emulateError: Bool
         
-        func fetch(url: URL, hadler handler: @escaping (Result<Data, Error>) -> Void) {
+        func fetch(url: URL, handler: @escaping (Result<Data, Error>) -> Void) {
             if emulateError {
                 handler(.failure(TestError.test))
             } else {
