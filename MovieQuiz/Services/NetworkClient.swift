@@ -2,12 +2,14 @@
 //  NetworkClient.swift
 //  MovieQuiz
 //
-//  Created by Bakhadir on 15.10.2023.
 //
 
 import Foundation
 
-struct NetworkClient {
+protocol NetworkRouting {
+    func fetch(url: URL, handler: @escaping (Result<Data, Error>) -> Void)
+}
+struct NetworkClient: NetworkRouting {
     
     //MARK: - Private Properties
     
