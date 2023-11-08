@@ -55,8 +55,12 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
             
             self.presenter.restartGame()
         }
+        
+        alert.view.accessibilityIdentifier = "Game results"
         alert.addAction(action)
         
+        
+        alert.addAction(action)
         self.present(alert, animated: true, completion: nil)
     }
     
